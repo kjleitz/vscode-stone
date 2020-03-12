@@ -1,0 +1,35 @@
+{
+    "name": "vscode-stone",
+    "displayName": "Stone",
+    "description": "Language support for the Stone programming language",
+    "version": "0.0.1",
+    "publisher": "kjleitz",
+	"author": {
+		"name": "Keegan Leitz"
+	},
+	"license": "MIT",
+	"homepage": "https://github.com/kjleitz/vscode-stone",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kjleitz/vscode-stone"
+	},
+    "engines": {
+        "vscode": "^1.43.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "stone",
+            "aliases": ["Stone", "stone"],
+            "extensions": [".stn",".stone"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "stone",
+            "scopeName": "source.stone",
+            "path": "./syntaxes/stone.tmLanguage.json"
+        }]
+    }
+}
