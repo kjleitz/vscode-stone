@@ -1,108 +1,359 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "Stone",
-	"scopeName": "source.stone",
-	"patterns": [
-		{
-			"include": "#comments"
-		},
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"include": "#numbers"
-		},
-		{
-			"include": "#functions"
-		}
-	],
-	"repository": {
-		"comments": {
-			"patterns": [
-				{
-					"match": "#.*$\\n?",
-					"name": "comment.line.stone"
-				}
-			]
-		},
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.stone",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
-		},
-		"strings": {
-			"name": "string.quoted.double.stone",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": [
-				{
-					"name": "constant.character.escape.stone",
-					"match": "\\\\."
-				}
-			]
-		},
-		"numbers": {
-			"patterns": [
-				{
-					"name": "constant.numeric.integer.stone",
-					"match": "\\b\\d+(?!\\.\\d)\\b"
-				},
-				{
-					"name": "constant.numeric.float.stone",
-					"match": "\\b\\d+\\.\\d+\\b"
-				}
-			]
-		},
-		"functions": {
-			"patterns": [
-				{
-					"name": "meta.function.definition.stone",
-					"begin": "^\\s*(def)\\s+([_A-Za-z]\\w*)\\s*\\(",
-					"end": "(?<=\\)):([_A-Za-z]\\w*)?(?=\\s+.*$|\\s*$)",
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Stone",
+  "scopeName": "source.stone",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#regexes"
+    },
+    {
+      "include": "#functions"
+    },
+    {
+      "include": "#barewords"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "match": "#.*$\\n?",
+          "name": "comment.line.stone"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.stone",
+          "match": "\\b(if|while|for|return)\\b"
+        }
+      ]
+    },
+    "barewords": {
+      "patterns": [
+        {
+          "name": "variable.other.member.stone",
+          "match": "\\b\\.[A-Z]\\w*"
+        },
+        {
+          "name": "entity.name.function.stone",
+          "match": "\\b\\.?[_a-z]\\w*(?=\\()"
+        },
+        {
+          "name": "variable.other.readwrite.stone",
+          "match": "\\b(?<!\\.)[_a-z]\\w*(?!\\()"
+        },
+        {
+          "name": "entity.name.class.stone",
+          "match": "\\b(?<!\\.)[A-Z]\\w*"
+        }
+      ]
+    },
+    "regexes": {
+      "patterns": [
+        {
+					"name": "string.regexp.stone",
+					"begin": "(?<!\\+\\+|--|})(?<=[=(:,\\[?+!]|^return|[^\\._$[:alnum:]]return|^case|[^\\._$[:alnum:]]case|=>|&&|\\|\\||\\*\\/)\\s*(\\/)(?![\\/*])(?=(?:[^\\/\\\\\\[\\()]|\\\\.|\\[([^\\]\\\\]|\\\\.)+\\]|\\(([^\\)\\\\]|\\\\.)+\\))+\\/([gimsuy]+|(?![\\/\\*])|(?=\\/\\*))(?!\\s*[a-zA-Z0-9_$]))",
 					"beginCaptures": {
 						"1": {
-							"name": "storage.type.function.stone"
+							"name": "punctuation.definition.string.begin.stone"
+						}
+					},
+					"end": "(/)([gimsuy]*)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.string.end.stone"
 						},
 						"2": {
-							"name": "entity.name.function.stone"
-						}
-					},
-					"endCaptures": {
-						"1": {
-							"name": "support.type.stone"
+							"name": "keyword.other.stone"
 						}
 					},
 					"patterns": [
 						{
-							"include": "#comments"
+							"include": "#regex-structures"
 						}
 					]
 				},
 				{
-					"name": "meta.function.definition.stone",
-					"begin": "\\b([_A-Za-z]\\w*)\\s*=\\s*\\(",
-					"end": "(?<=\\)):([_A-Za-z]\\w*)?(?=\\s+.*$|\\s*$)",
+					"name": "string.regexp.stone",
+					"begin": "((?<![_$[:alnum:])\\]]|\\+\\+|--|}|\\*\\/)|((?<=^return|[^\\._$[:alnum:]]return|^case|[^\\._$[:alnum:]]case))\\s*)\\/(?![\\/*])(?=(?:[^\\/\\\\\\[]|\\\\.|\\[([^\\]\\\\]|\\\\.)+\\])+\\/([gimsuy]+|(?![\\/\\*])|(?=\\/\\*))(?!\\s*[a-zA-Z0-9_$]))",
 					"beginCaptures": {
-						"1": {
-							"name": "entity.name.function.stone"
+						"0": {
+							"name": "punctuation.definition.string.begin.stone"
 						}
 					},
+					"end": "(/)([gimsuy]*)",
 					"endCaptures": {
 						"1": {
-							"name": "support.type.stone"
+							"name": "punctuation.definition.string.end.stone"
+						},
+						"2": {
+							"name": "keyword.other.stone"
 						}
 					},
 					"patterns": [
 						{
-							"include": "#comments"
+							"include": "#regex-structures"
 						}
 					]
 				}
-			]
-		}
-	}
+      ]
+    },
+    "regex-structures": {
+      "patterns": [
+        {
+          "name": "keyword.control.anchor.regexp.stone",
+          "match": "\\\\[bB]|\\^|\\$"
+        },
+        {
+          "match": "\\\\[1-9]\\d*|\\\\k<([a-zA-Z_$][\\w$]*)>",
+          "captures": {
+            "0": {
+              "name": "keyword.other.back-reference.regexp.stone"
+            },
+            "1": {
+              "name": "variable.other.regexp.stone"
+            }
+          }
+        },
+        {
+          "name": "keyword.operator.quantifier.regexp.stone",
+          "match": "[?+*]|\\{(\\d+,\\d+|\\d+,|,\\d+|\\d+)\\}\\??"
+        },
+        {
+          "name": "keyword.operator.or.regexp.stone",
+          "match": "\\|"
+        },
+        {
+          "name": "meta.group.assertion.regexp.stone",
+          "begin": "(\\()((\\?=)|(\\?!)|(\\?<=)|(\\?<!))",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.group.regexp.stone"
+            },
+            "2": {
+              "name": "punctuation.definition.group.assertion.regexp.stone"
+            },
+            "3": {
+              "name": "meta.assertion.look-ahead.regexp.stone"
+            },
+            "4": {
+              "name": "meta.assertion.negative-look-ahead.regexp.stone"
+            },
+            "5": {
+              "name": "meta.assertion.look-behind.regexp.stone"
+            },
+            "6": {
+              "name": "meta.assertion.negative-look-behind.regexp.stone"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.group.regexp.stone"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#regex-structures"
+            }
+          ]
+        },
+        {
+          "name": "meta.group.regexp.stone",
+          "begin": "\\((?:(\\?:)|(?:\\?<([a-zA-Z_$][\\w$]*)>))?",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.group.regexp.stone"
+            },
+            "1": {
+              "name": "punctuation.definition.group.no-capture.regexp.stone"
+            },
+            "2": {
+              "name": "variable.other.regexp.stone"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.group.regexp.stone"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#regex-structures"
+            }
+          ]
+        },
+        {
+          "name": "string.unquoted.regexp.set.regexp.stone",
+          "begin": "(\\[)(\\^)?",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.character-class.regexp.stone"
+            },
+            "2": {
+              "name": "keyword.operator.negation.regexp.stone"
+            }
+          },
+          "end": "(\\])",
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.character-class.regexp.stone"
+            }
+          },
+          "patterns": [
+            {
+              "name": "string.unquoted.regexp.range.regexp.stone",
+              "match": "(?:.|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))",
+              "captures": {
+                "1": {
+                  "name": "constant.character.numeric.regexp.stone"
+                },
+                "2": {
+                  "name": "constant.character.control.regexp.stone"
+                },
+                "3": {
+                  "name": "constant.character.escape.backslash.regexp.stone"
+                },
+                "4": {
+                  "name": "constant.character.numeric.regexp.stone"
+                },
+                "5": {
+                  "name": "constant.character.control.regexp.stone"
+                },
+                "6": {
+                  "name": "constant.character.escape.backslash.regexp.stone"
+                }
+              }
+            },
+            {
+              "include": "#regex-character-classes"
+            }
+          ]
+        },
+        {
+          "include": "#regex-character-classes"
+        }
+      ]
+    },
+    "regex-character-classes": {
+      "patterns": [
+        {
+          "name": "string.unquoted.regexp.regexp.stone",
+          "match": "\\\\[wWsSdDtrnvf]|\\."
+        },
+        {
+          "name": "constant.character.numeric.regexp.stone",
+          "match": "\\\\([0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4})"
+        },
+        {
+          "name": "constant.character.control.regexp.stone",
+          "match": "\\\\c[A-Z]"
+        },
+        {
+          "name": "constant.character.escape.backslash.regexp.stone",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.stone",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.stone",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.stone",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.stone",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.integer.stone",
+          "match": "\\b\\d+(?!\\.\\d)\\b"
+        },
+        {
+          "name": "constant.numeric.float.stone",
+          "match": "\\b\\d+\\.\\d+\\b"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "meta.function.definition.stone",
+          "begin": "^\\s*(def)\\s+([_A-Za-z]\\w*)\\s*\\(",
+          "end": "(?<=\\)):([_A-Za-z]\\w*)?(?=\\s+.*$|\\s*$)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.function.stone"
+            },
+            "2": {
+              "name": "entity.name.function.stone"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "support.type.stone"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "name": "meta.function.definition.stone",
+          "begin": "\\b([_A-Za-z]\\w*)\\s*=\\s*\\(",
+          "end": "(?<=\\)):([_A-Za-z]\\w*)?(?=\\s+.*$|\\s*$)",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.function.stone"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "support.type.stone"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            }
+          ]
+        }
+      ]
+    }
+  }
 }
