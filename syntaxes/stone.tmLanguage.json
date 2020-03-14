@@ -37,8 +37,16 @@
     "keywords": {
       "patterns": [
         {
+          "name": "keyword.control.conditional.stone",
+          "match": "\\b(check|guard|slide)\\b"
+        },
+        {
+          "name": "keyword.control.conditional.stone",
+          "match": "(?<=^|\\s)(=>|_>)"
+        },
+        {
           "name": "keyword.control.stone",
-          "match": "\\b(if|while|for|return|check|guard|raise|return|slide)\\b"
+          "match": "\\b(while|for|return|raise)\\b"
         },
         {
           "name": "storage.type.class.stone keyword.declaration.class.stone",
@@ -49,20 +57,36 @@
     "barewords": {
       "patterns": [
         {
+          "name": "constant.language.this.stone",
+          "match": "(?<!\\.)(?:\\b)(this)(?:\\b)"
+        },
+        {
+          "name": "constant.language.super.stone",
+          "match": "(?<!\\.)(?:\\b)(super)(?:\\b)"
+        },
+        {
+          "name": "constant.language.boolean.stone",
+          "match": "(?<!\\.)(?:\\b)(true|false)(?:\\b)"
+        },
+        {
+          "name": "constant.language.null.stone",
+          "match": "(?<!\\.)(?:\\b)(null)(?:\\b)"
+        },
+        {
           "name": "variable.other.member.stone",
-          "match": "\\b\\.[A-Z]\\w*"
+          "match": "(?:\\b)\\.[A-Z]\\w*"
         },
         {
           "name": "entity.name.function.stone",
-          "match": "\\b\\.?[_a-z]\\w*(?=\\()"
+          "match": "(?:\\b)\\.?[_a-z]\\w*(?=\\()"
         },
         {
           "name": "variable.other.readwrite.stone",
-          "match": "\\b(?<!\\.)[_a-z]\\w*(?!\\()"
+          "match": "(?:\\b)(?<!\\.)[_a-z]\\w*(?!\\()"
         },
         {
           "name": "entity.name.class.stone",
-          "match": "\\b(?<!\\.)[A-Z]\\w*"
+          "match": "(?:\\b)(?<!\\.)[A-Z]\\w*"
         }
       ]
     },
