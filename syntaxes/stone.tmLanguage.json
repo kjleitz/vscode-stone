@@ -38,7 +38,11 @@
       "patterns": [
         {
           "name": "keyword.control.stone",
-          "match": "\\b(if|while|for|return)\\b"
+          "match": "\\b(if|while|for|return|check|guard|raise|return|slide)\\b"
+        },
+        {
+          "name": "storage.type.class.stone keyword.declaration.class.stone",
+          "match": "\\b(proto|from|shaped|set|extends)\\b"
         }
       ]
     },
@@ -199,8 +203,10 @@
           ]
         },
         {
-          "name": "string.unquoted.regexp.set.regexp.stone",
+          "name": "constant.other.character-class.set.regexp.stone",
+          "contentName": "string.regexp.stone",
           "begin": "(\\[)(\\^)?",
+          "end": "(\\])",
           "beginCaptures": {
             "1": {
               "name": "punctuation.definition.character-class.regexp.stone"
@@ -209,7 +215,6 @@
               "name": "keyword.operator.negation.regexp.stone"
             }
           },
-          "end": "(\\])",
           "endCaptures": {
             "1": {
               "name": "punctuation.definition.character-class.regexp.stone"
@@ -217,7 +222,7 @@
           },
           "patterns": [
             {
-              "name": "string.unquoted.regexp.range.regexp.stone",
+              "name": "constant.other.character-class.range.regexp.stone",
               "match": "(?:.|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))\\-(?:[^\\]\\\\]|(\\\\(?:[0-7]{3}|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}))|(\\\\c[A-Z])|(\\\\.))",
               "captures": {
                 "1": {
@@ -253,7 +258,7 @@
     "regex-character-classes": {
       "patterns": [
         {
-          "name": "string.unquoted.regexp.regexp.stone",
+          "name": "constant.character.escape.backslash.regexp.stone",
           "match": "\\\\[wWsSdDtrnvf]|\\."
         },
         {
